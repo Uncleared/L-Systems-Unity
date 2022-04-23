@@ -7,7 +7,7 @@ using System;
 public class LSystemTestSuite
 {
     [UnityTest]
-    public IEnumerator TestStringGeneration1()
+    public IEnumerator TestAlgaeStringGeneration1()
     {
         GameObject LSystemGO = new GameObject();
         LSystem LSystem = LSystemGO.AddComponent<LSystem>();
@@ -23,6 +23,22 @@ public class LSystemTestSuite
         Assert.AreEqual(LSystem.GenerateString(4), "ABAABABA");
         Assert.AreEqual(LSystem.GenerateString(5), "ABAABABAABAAB");
         Assert.AreEqual(LSystem.GenerateString(6), "ABAABABAABAABABAABABA");
+    }
+
+    [UnityTest]
+    public IEnumerator TestFractalTreeStringGeneration1()
+    {
+        GameObject LSystemGO = new GameObject();
+        LSystem LSystem = LSystemGO.AddComponent<LSystem>();
+        LSystem.axiom = '0';
+        LSystem.AddRule(new Rule('1', "11"));
+        LSystem.AddRule(new Rule('0', "1[0]0"));
+
+        yield return null;
+
+        Assert.AreEqual(LSystem.GenerateString(1), "1[0]0");
+        Assert.AreEqual(LSystem.GenerateString(2), "11[1[0]0]1[0]0");
+        Assert.AreEqual(LSystem.GenerateString(3), "1111[11[1[0]0]1[0]0]11[1[0]0]1[0]0");
     }
 
     [UnityTest]
